@@ -4,136 +4,355 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Body Temperature Tracker</title>
-  <meta name="description" content="Track your body temperature, symptoms and trends. Simple, clean and private." />
+  <meta name="description" content="Track your body temperature, estimate with camera, log symptoms, view trends, and export PDF reports." />
+
   <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
-      background: #ffffff;
-      color: #111;
-      display: flex;
-      justify-content: center;
+    :root{
+      --bg: #ffffff;
+      --text: #1f1f1f;
+      --muted: #6b6b6b;
+      --card: #fbfbfb;
+      --border: rgba(0,0,0,.06);
+      --shadow: 0 18px 45px rgba(0,0,0,.07);
+      --shadow2: 0 10px 30px rgba(0,0,0,.06);
+      --max: 1040px;
     }
 
-    .container {
-      max-width: 680px;
-      padding: 80px 24px;
-      text-align: center;
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    h1 {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      line-height: 1.1;
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 26px 18px 74px;
     }
 
-    p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #555;
-      margin-bottom: 40px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
+    /* Top badges */
+    .top-badges{
+      display:flex;
+      justify-content:center;
+      gap: 18px;
+      padding: 8px 0 18px;
       flex-wrap: wrap;
-      margin-bottom: 60px;
     }
 
-    .btn {
-      padding: 14px 22px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      border: 1px solid #ddd;
-      transition: 0.2s ease;
+    .store-badge{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: #0b0b0b;
+      color: #fff;
+      text-decoration:none;
+      box-shadow: var(--shadow2);
+      transition: transform .15s ease, opacity .15s ease;
+      min-width: 190px;
+      justify-content:center;
+    }
+    .store-badge:hover{ transform: translateY(-1px); opacity:.92; }
+
+    .store-badge .mark{
+      width: 28px;
+      height: 28px;
+      display:grid;
+      place-items:center;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .store-badge .t{
+      display:flex;
+      flex-direction:column;
+      line-height: 1.05;
+      text-align:left;
+    }
+    .store-badge .t small{
+      font-size: 11px;
+      opacity:.85;
+      letter-spacing:.2px;
+    }
+    .store-badge .t strong{
+      font-size: 16px;
+      letter-spacing:.2px;
+      font-weight: 700;
     }
 
-    .btn-primary {
-      background: #111;
-      color: white;
-      border: 1px solid #111;
+    /* Hero */
+    .hero{
+      text-align:center;
+      padding: 18px 0 14px;
     }
 
-    .btn:hover {
-      opacity: 0.85;
+    .app-icon{
+      width: 84px;
+      height: 84px;
+      border-radius: 20px;
+      background: #f2f2f2;
+      border: 1px solid rgba(0,0,0,.06);
+      margin: 0 auto 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,.08);
+      display:grid;
+      place-items:center;
+    }
+    .app-icon img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+    }
+    .app-icon .placeholder{
+      color:#9a9a9a;
+      font-size: 12px;
+      padding: 10px;
     }
 
-    .section {
-      margin-top: 60px;
+    h1{
+      margin: 0 0 10px;
+      font-size: 44px;
+      letter-spacing: -0.6px;
+      font-weight: 900;
+      color:#2a2a2a;
+      line-height: 1.08;
+    }
+    .lead{
+      margin: 0 auto;
+      max-width: 760px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--muted);
+      padding: 0 8px;
     }
 
-    .section h2 {
-      font-size: 22px;
-      margin-bottom: 16px;
+    /* Section headings */
+    h2{
+      text-align:center;
+      font-size: 38px;
+      letter-spacing: -0.4px;
+      margin: 44px 0 26px;
+      color: #2a2a2a;
+      font-weight: 900;
     }
 
-    .feature {
-      margin-bottom: 14px;
-      color: #444;
+    /* Cards */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      align-items: stretch;
     }
 
-    footer {
-      margin-top: 80px;
+    .grid.bottom{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 720px;
+      margin: 22px auto 0;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px 22px;
+      box-shadow: var(--shadow);
+      text-align:center;
+      min-height: 178px;
+    }
+
+    .icon{
+      font-size: 28px;
+      margin-bottom: 12px;
+      display:inline-flex;
+      width: 44px;
+      height: 44px;
+      align-items:center;
+      justify-content:center;
+      border-radius: 14px;
+      background: rgba(0,0,0,.03);
+      border: 1px solid rgba(0,0,0,.04);
+    }
+
+    .card h3{
+      margin: 8px 0 8px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #303030;
+    }
+
+    .card p{
+      margin: 0;
+      color: var(--muted);
       font-size: 14px;
-      color: #888;
+      line-height: 1.55;
+      max-width: 320px;
+      margin-left:auto;
+      margin-right:auto;
     }
 
-    footer a {
-      color: inherit;
-      text-decoration: none;
-      margin: 0 10px;
+    /* Testimonials */
+    .stars{
+      font-size: 18px;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .quote{
+      font-style: italic;
+      color: #4a4a4a;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+    .name{
+      font-weight: 900;
+      color: #1b66ff;
+      font-size: 14px;
     }
 
-    @media (max-width: 600px) {
-      h1 { font-size: 32px; }
-      p { font-size: 16px; }
+    .disclaimer{
+      max-width: 900px;
+      margin: 34px auto 0;
+      text-align:center;
+      color: #7a7a7a;
+      font-size: 13px;
+      line-height: 1.65;
+      padding: 0 10px;
+    }
+
+    .section{
+      padding: 8px 0 26px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      h1{ font-size: 36px; }
+      h2{ font-size: 32px; }
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid.bottom{ grid-template-columns: 1fr; max-width: 520px; }
+    }
+    @media (max-width: 620px){
+      .store-badge{ min-width: 170px; }
+      .grid{ grid-template-columns: 1fr; }
+      h1{ font-size: 30px; }
+      h2{ font-size: 28px; }
+      .app-icon{ width: 74px; height: 74px; border-radius: 18px; }
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Track your body temperature.<br>Simple & private.</h1>
-    <p>
-      Log temperature, symptoms and notes.  
-      View trends over time and export PDF reports to share with your doctor.
-    </p>
+  <div class="wrap">
 
-    <div class="buttons">
-      <a href="https://apps.apple.com/" class="btn btn-primary" target="_blank">
-        Download on the App Store
+    <!-- Top store badges -->
+    <div class="top-badges">
+      <!-- TODO: Replace with your real App Store URL -->
+      <a class="store-badge" href="https://apps.apple.com/" target="_blank" rel="noreferrer">
+        <div class="mark"></div>
+        <div class="t">
+          <small>Download on the</small>
+          <strong>App Store</strong>
+        </div>
       </a>
-      <a href="https://play.google.com/" class="btn" target="_blank">
-        Get it on Google Play
+
+      <!-- TODO: Replace with your real Google Play URL -->
+      <a class="store-badge" href="https://play.google.com/" target="_blank" rel="noreferrer">
+        <div class="mark">▶︎</div>
+        <div class="t">
+          <small>GET IT ON</small>
+          <strong>Google Play</strong>
+        </div>
       </a>
     </div>
 
-    <div class="section">
-      <h2>Features</h2>
-      <div class="feature">• Fast daily temperature logging</div>
-      <div class="feature">• Symptom & note tracking</div>
-      <div class="feature">• Clean charts & calendar view</div>
-      <div class="feature">• Export PDF reports</div>
-      <div class="feature">• Designed for privacy</div>
-    </div>
+    <!-- Hero -->
+    <div class="hero">
+      <!-- App Icon Area -->
+      <div class="app-icon">
+        <!-- Put your icon here: assets/app-icon.png -->
+        <img src="assets/app-icon.png" alt="Body Temperature Tracker App Icon"
+             onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;placeholder&quot;>App Icon</div>';">
+      </div>
 
-    <div class="section">
-      <h2>Disclaimer</h2>
-      <p style="font-size:14px;color:#777;">
-        This app is for informational purposes only and does not provide medical advice.
+      <h1>Body Temperature Tracker</h1>
+      <p class="lead">
+        Estimate body temperature with your camera, log measurements with symptoms and notes,
+        view trends over time, and export PDF reports to share when needed.
       </p>
     </div>
 
-    <footer>
-      © <script>document.write(new Date().getFullYear())</script> Body Temperature Tracker  
-      <br><br>
-      <a href="#">Privacy Policy</a> |
-      <a href="#">Terms</a> |
-      <a href="mailto:support@yourmail.com">Support</a>
-    </footer>
+    <!-- Why section -->
+    <section class="section">
+      <h2>Why Use This App?</h2>
+
+      <div class="grid">
+        <div class="card">
+          <div class="icon">📷</div>
+          <h3>Camera-Based Estimation</h3>
+          <p>Get an approximate body temperature estimate using your camera, with clear in-app instructions.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📝</div>
+          <h3>Log Symptoms & Notes</h3>
+          <p>Record symptoms, medications, and notes alongside each entry for better context.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📈</div>
+          <h3>Charts & Trends</h3>
+          <p>See patterns across days and weeks with clean charts that make changes easy to spot.</p>
+        </div>
+      </div>
+
+      <div class="grid bottom">
+        <div class="card">
+          <div class="icon">📅</div>
+          <h3>Calendar History</h3>
+          <p>Browse your history by date and add or edit entries directly from the calendar.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📄</div>
+          <h3>Export PDF Reports</h3>
+          <p>Create a shareable PDF summary of your records to keep for yourself or share with a doctor.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+      <h2>What Users Say</h2>
+
+      <div class="grid">
+        <div class="card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="quote">"Super simple to log my temperature and see trends over the week."</p>
+          <div class="name">– Emily R.</div>
+        </div>
+
+        <div class="card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="quote">"The PDF export is great when I want to share my history with a doctor."</p>
+          <div class="name">– David L.</div>
+        </div>
+
+        <div class="card">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="quote">"Clean design, easy to use, and I like the camera-based estimation feature."</p>
+          <div class="name">– Arjun M.</div>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        Disclaimer: Camera-based temperature estimation is an approximate feature and may not reflect actual body temperature.
+        This app is for informational purposes only and does not provide medical advice, diagnosis, or treatment.
+        For accurate measurements, use a certified thermometer and consult a healthcare professional when needed.
+      </p>
+    </section>
+
   </div>
 </body>
 </html>
