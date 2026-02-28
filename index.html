@@ -2,144 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Body Temperature Tracker</title>
-  <meta name="description" content="Track your temperature, symptoms, and trends. Export as PDF and share with your doctor." />
-  <meta property="og:title" content="Body Temperature Tracker" />
-  <meta property="og:description" content="Track temperature, symptoms, trends. Export PDF." />
-  <meta property="og:type" content="website" />
+  <meta name="description" content="Track your body temperature, symptoms and trends. Simple, clean and private." />
   <style>
-    :root { --max: 1020px; }
-    body { margin:0; font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial; color:#0b0b0f; background:#fff; }
-    a { color: inherit; }
-    .wrap { max-width: var(--max); margin:0 auto; padding: 28px 18px; }
-    .nav { display:flex; justify-content:space-between; align-items:center; gap:12px; }
-    .brand { font-weight: 700; letter-spacing: .2px; }
-    .cta { display:flex; gap:10px; flex-wrap:wrap; }
-    .btn { display:inline-block; padding:12px 16px; border-radius:12px; text-decoration:none; font-weight:600; border:1px solid #e6e6ef; }
-    .btn.primary { background:#0b0b0f; color:#fff; border-color:#0b0b0f; }
-    .hero { display:grid; grid-template-columns: 1.2fr .8fr; gap:22px; align-items:center; padding: 34px 0 18px; }
-    h1 { font-size: clamp(30px, 4vw, 46px); line-height:1.05; margin: 0 0 10px; }
-    .sub { font-size: 16px; line-height:1.5; color:#3c3c4a; margin:0 0 18px; }
-    .card { border:1px solid #ececf3; border-radius:16px; padding:16px; background:#fafafe; }
-    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-top: 18px; }
-    .muted { color:#5a5a6b; font-size: 13px; line-height:1.45; }
-    .section { padding: 26px 0; }
-    .section h2 { margin:0 0 12px; font-size: 22px; }
-    .features { display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; }
-    .step { display:grid; grid-template-columns: 40px 1fr; gap:12px; align-items:flex-start; }
-    .num { width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:#0b0b0f; color:#fff; font-weight:700; }
-    .shots { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
-    .shot { aspect-ratio: 9/19.5; border-radius:16px; border:1px dashed #d9d9e6; display:grid; place-items:center; color:#6b6b7a; background:#fff; }
-    .faq details { border:1px solid #ececf3; border-radius:14px; padding:14px 14px; background:#fff; }
-    .faq { display:grid; gap:10px; }
-    footer { border-top:1px solid #efeff6; padding: 18px 0; margin-top: 26px; }
-    @media (max-width: 860px){
-      .hero { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: 1fr; }
-      .features { grid-template-columns: 1fr; }
-      .shots { grid-template-columns: repeat(2, 1fr); }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+      background: #ffffff;
+      color: #111;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 680px;
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .btn {
+      padding: 14px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid #ddd;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #111;
+      color: white;
+      border: 1px solid #111;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    .section {
+      margin-top: 60px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .feature {
+      margin-bottom: 14px;
+      color: #444;
+    }
+
+    footer {
+      margin-top: 80px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    footer a {
+      color: inherit;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 32px; }
+      p { font-size: 16px; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="nav">
-      <div class="brand">Body Temperature Tracker</div>
-      <div class="cta">
-        <!-- TODO: App Store / Play linklerini buraya koy -->
-        <a class="btn primary" href="https://apps.apple.com/" target="_blank" rel="noreferrer">Download on App Store</a>
-        <a class="btn" href="https://play.google.com/" target="_blank" rel="noreferrer">Get it on Google Play</a>
-      </div>
-    </div>
+  <div class="container">
+    <h1>Track your body temperature.<br>Simple & private.</h1>
+    <p>
+      Log temperature, symptoms and notes.  
+      View trends over time and export PDF reports to share with your doctor.
+    </p>
 
-    <div class="hero">
-      <div>
-        <h1>Track your temperature.<br/>Understand your trends.</h1>
-        <p class="sub">Log temperature, symptoms, and notes. View charts and calendar history. Export as PDF and share with your doctor.</p>
-        <div class="cta">
-          <a class="btn primary" href="https://apps.apple.com/" target="_blank" rel="noreferrer">Get the app</a>
-          <a class="btn" href="#faq">FAQ</a>
-        </div>
-        <div class="grid">
-          <div class="card">
-            <b>Fast logging</b><div class="muted">Add values in seconds</div>
-          </div>
-          <div class="card">
-            <b>Charts</b><div class="muted">See weekly/monthly trends</div>
-          </div>
-          <div class="card">
-            <b>PDF export</b><div class="muted">Share with your doctor</div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <b>App preview</b>
-        <div class="muted" style="margin-top:8px">Replace this area with a screenshot image later.</div>
-        <div class="shot" style="margin-top:12px">Screenshot</div>
-      </div>
+    <div class="buttons">
+      <a href="https://apps.apple.com/" class="btn btn-primary" target="_blank">
+        Download on the App Store
+      </a>
+      <a href="https://play.google.com/" class="btn" target="_blank">
+        Get it on Google Play
+      </a>
     </div>
 
     <div class="section">
-      <h2>Key features</h2>
-      <div class="features">
-        <div class="card"><b>Calendar view</b><div class="muted">Browse and add values by date.</div></div>
-        <div class="card"><b>Symptoms & notes</b><div class="muted">Track context next to your measurements.</div></div>
-        <div class="card"><b>History & insights</b><div class="muted">Spot patterns over time.</div></div>
-        <div class="card"><b>Export & share</b><div class="muted">Create a PDF report anytime.</div></div>
-      </div>
+      <h2>Features</h2>
+      <div class="feature">• Fast daily temperature logging</div>
+      <div class="feature">• Symptom & note tracking</div>
+      <div class="feature">• Clean charts & calendar view</div>
+      <div class="feature">• Export PDF reports</div>
+      <div class="feature">• Designed for privacy</div>
     </div>
 
     <div class="section">
-      <h2>How it works</h2>
-      <div class="features">
-        <div class="card step"><div class="num">1</div><div><b>Add a measurement</b><div class="muted">Enter temperature and optional notes.</div></div></div>
-        <div class="card step"><div class="num">2</div><div><b>See trends</b><div class="muted">Charts help you understand changes.</div></div></div>
-        <div class="card step"><div class="num">3</div><div><b>Export PDF</b><div class="muted">Share a report with your doctor.</div></div></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Screenshots</h2>
-      <div class="shots">
-        <div class="shot">Screenshot 1</div>
-        <div class="shot">Screenshot 2</div>
-        <div class="shot">Screenshot 3</div>
-        <div class="shot">Screenshot 4</div>
-      </div>
-      <p class="muted" style="margin-top:10px">
-        Tip: Bu kutuları sonradan gerçek görsellerle değiştireceğiz (aşağıda anlattım).
+      <h2>Disclaimer</h2>
+      <p style="font-size:14px;color:#777;">
+        This app is for informational purposes only and does not provide medical advice.
       </p>
     </div>
 
-    <div class="section" id="faq">
-      <h2>FAQ</h2>
-      <div class="faq">
-        <details>
-          <summary><b>Is this a medical device?</b></summary>
-          <p class="muted">No. This app is for tracking and informational purposes only and does not provide medical advice.</p>
-        </details>
-        <details>
-          <summary><b>Can I share my records?</b></summary>
-          <p class="muted">Yes. You can export your data as a PDF and share it with your doctor.</p>
-        </details>
-        <details>
-          <summary><b>How do I cancel a subscription?</b></summary>
-          <p class="muted">You can manage and cancel subscriptions from your App Store / Google Play account settings.</p>
-        </details>
-      </div>
-    </div>
-
-    <footer class="muted">
-      <div style="display:flex; gap:14px; flex-wrap:wrap;">
-        <!-- TODO: policy linklerini ekle -->
-        <a href="#" aria-label="Privacy Policy">Privacy Policy</a>
-        <a href="#" aria-label="Terms of Use">Terms</a>
-        <a href="mailto:support@example.com" aria-label="Support Email">Support</a>
-      </div>
-      <div style="margin-top:10px;">© <span id="y"></span> Body Temperature Tracker</div>
+    <footer>
+      © <script>document.write(new Date().getFullYear())</script> Body Temperature Tracker  
+      <br><br>
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Terms</a> |
+      <a href="mailto:support@yourmail.com">Support</a>
     </footer>
   </div>
-  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
 </body>
 </html>
