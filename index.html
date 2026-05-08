@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Piley - Video Player for Wear OS</title>
+  <meta name="description" content="Send videos from your Android phone to your Wear OS smartwatch and watch them directly on your wrist with Piley." />
+
+  <style>
+    :root {
+      --bg: #070812;
+      --bg-soft: #101221;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text: #ffffff;
+      --muted: #a7adbf;
+      --primary: #ff9800;
+      --primary-soft: rgba(255, 152, 0, 0.15);
+      --accent: #7c5cff;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --max-width: 1100px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: auto;
+    }
+
+    .nav {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(7,8,18,0.8);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: black;
+      font-weight: 900;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: black;
+    }
+
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem,5vw,4rem);
+      margin-bottom: 20px;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .features {
+      padding: 60px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      background: var(--primary);
+      color: black;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .hero-visual {
+      padding: 40px 0 20px;
+    }
+
+    .visual-wrapper {
+      position: relative;
+      height: 380px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at center, rgba(124,92,255,0.2), transparent 60%);
+      overflow: hidden;
+    }
+
+    .phone-shape {
+      position: absolute;
+      width: 220px;
+      height: 360px;
+      border-radius: 30px;
+      border: 2px solid rgba(255,255,255,0.15);
+      right: 35%;
+      top: 10px;
+      transform: rotate(6deg);
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .phone-shape img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .watch-shape {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      left: 20%;
+      bottom: 40px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .watch-shape img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .chip {
+      position: absolute;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.85rem;
+    }
+
+    .chip-left { left: 10px; top: 20px; }
+    .chip-right { right: 10px; bottom: 20px; }
+
+    .cta {
+      text-decoration: none;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @media(max-width: 900px){
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media(max-width: 900px){
+      .grid { grid-template-columns: 1fr 1fr; }
+      .visual-wrapper { height: 300px; }
+    }
+
+    @media(max-width: 600px){
+      .grid { grid-template-columns: 1fr; }
+      .visual-wrapper { height: 240px; }
+    }
+    }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <div class="brand-icon">▶</div>
+      Piley
+    </div>
+
+    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer">Download</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Watch videos on your smartwatch</h1>
+    <p>Send videos from your phone to your Wear OS watch and watch them anytime, anywhere.</p>
+    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer">Get on Google Play</a>
+  </div>
+</section>
+
+<section class="hero-visual">
+  <div class="container">
+    <div class="visual-wrapper">
+      <div class="phone-shape">
+        <img src="phone-app.png" alt="Piley Android app screenshot" />
+      </div>
+
+      <div class="watch-shape">
+        <img src="wear-app.png" alt="Piley Wear OS app screenshot" />
+      </div>
+
+      <div class="chip chip-left">Phone → Watch</div>
+      <div class="chip chip-right">Smooth playback</div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>Features</h2>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📲</div>
+        <h3>Easy transfer</h3>
+        <p>Send videos from your phone to your watch in seconds.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⌚</div>
+        <h3>Wear OS optimized</h3>
+        <p>Clean UI designed for small screens.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">▶</div>
+        <h3>Playback controls</h3>
+        <p>Play, pause, and control videos easily.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🔍</div>
+        <h3>Zoom mode</h3>
+        <p>Better viewing on your watch screen.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🗂️</div>
+        <h3>Manage videos</h3>
+        <p>Delete and organize saved videos.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Fast & simple</h3>
+        <p>No setup, just send and watch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <h2>How it works</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div>Select a video on your phone</div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div>Send it to your watch</div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div>Watch instantly</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Simple video experience on your wrist</h2>
+    <p>Built for one purpose: sending and watching videos easily.</p>
+    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer">Download Piley</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    © 2026 Piley
+  </div>
+</footer>
+
+</body>
+</html>
