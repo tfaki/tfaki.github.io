@@ -3,33 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Piley - Video Player for Wear OS</title>
-  <meta name="description" content="Send videos from your Android phone to your Wear OS smartwatch and watch them directly on your wrist with Piley." />
+
+  <title>Piley - Video Player for Wear OS | Watch Videos on Galaxy Watch</title>
+
+  <meta name="description" content="Piley is a video player for Wear OS. Send MP4 videos from your Android phone to your Galaxy Watch or Wear OS smartwatch and watch them offline on your wrist." />
+
+  <meta name="keywords" content="Wear OS video player, Galaxy Watch video player, watch videos on smartwatch, MP4 player for Wear OS, offline video player Wear OS, send video to Galaxy Watch" />
+
+  <meta property="og:title" content="Piley - Video Player for Wear OS" />
+  <meta property="og:description" content="Send videos from your Android phone to your Wear OS smartwatch and watch them offline." />
+  <meta property="og:type" content="website" />
 
   <style>
     :root {
-      --bg: #070812;
-      --bg-soft: #101221;
-      --card: rgba(255, 255, 255, 0.06);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --bg: #0e0e0e;
+      --bg-soft: #171717;
+      --card: rgba(255,255,255,0.065);
+      --card-border: rgba(255,255,255,0.12);
       --text: #ffffff;
-      --muted: #a7adbf;
+      --muted: #a7a7a7;
       --primary: #ff9800;
-      --primary-soft: rgba(255, 152, 0, 0.15);
-      --accent: #7c5cff;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
-      --radius-xl: 28px;
-      --radius-lg: 18px;
-      --max-width: 1100px;
+      --primary-soft: rgba(255,152,0,0.16);
+      --radius-xl: 32px;
+      --radius-lg: 22px;
+      --max-width: 1120px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      background: var(--bg);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,152,0,0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(124,92,255,0.12), transparent 32%),
+        var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
     }
 
     .container {
@@ -38,345 +59,744 @@
     }
 
     .nav {
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(7,8,18,0.8);
-      backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
+      z-index: 20;
+      background: rgba(14,14,14,0.78);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .nav-inner {
+      height: 72px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      height: 70px;
+      justify-content: space-between;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 700;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     .brand-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), #ffbd59);
+      color: #111;
       display: grid;
       place-items: center;
-      background: var(--primary);
-      color: black;
       font-weight: 900;
+      box-shadow: 0 12px 32px rgba(255,152,0,0.28);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      text-decoration: none;
     }
 
     .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       text-decoration: none;
-      padding: 12px 20px;
+      padding: 13px 22px;
       border-radius: 999px;
-      font-weight: 600;
-      display: inline-block;
+      font-weight: 750;
+      transition: 0.2s ease;
     }
 
     .btn-primary {
       background: var(--primary);
-      color: black;
+      color: #111;
+      box-shadow: 0 14px 32px rgba(255,152,0,0.26);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
     }
 
     .hero {
-      padding: 80px 0 60px;
-      text-align: center;
+      padding: 92px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: #ffd8a1;
+      border: 1px solid rgba(255,152,0,0.24);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 22px;
     }
 
     h1 {
-      font-size: clamp(2.5rem,5vw,4rem);
-      margin-bottom: 20px;
-      letter-spacing: -0.04em;
+      font-size: clamp(2.75rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
+      margin-bottom: 24px;
     }
 
-    .hero p {
+    .hero-text {
       color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 30px;
+      font-size: 1.12rem;
+      max-width: 650px;
+      margin-bottom: 30px;
     }
 
-    .features {
-      padding: 60px 0;
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .trust {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .visual-card {
+      min-height: 470px;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.035)),
+        radial-gradient(circle at 50% 30%, rgba(255,152,0,0.28), transparent 52%);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.44);
+    }
+
+    .phone {
+      position: absolute;
+      width: 230px;
+      height: 410px;
+      right: 54px;
+      top: 36px;
+      border-radius: 34px;
+      background: #111;
+      border: 8px solid #252525;
+      overflow: hidden;
+      transform: rotate(5deg);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+    }
+
+    .phone img,
+    .watch img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .watch {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      left: 56px;
+      bottom: 56px;
+      border-radius: 50%;
+      background: #111;
+      border: 10px solid #262626;
+      overflow: hidden;
+      box-shadow: 0 28px 60px rgba(0,0,0,0.5);
+    }
+
+    .floating-chip {
+      position: absolute;
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .chip-1 {
+      left: 28px;
+      top: 28px;
+    }
+
+    .chip-2 {
+      right: 28px;
+      bottom: 28px;
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-header {
+      max-width: 760px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.045em;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: var(--muted);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
 
     .card {
       background: var(--card);
       border: 1px solid var(--card-border);
       border-radius: var(--radius-lg);
-      padding: 22px;
+      padding: 24px;
+      transition: 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,152,0,0.34);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      font-size: 1.35rem;
     }
 
     .card h3 {
       margin-bottom: 8px;
+      letter-spacing: -0.02em;
     }
 
     .card p {
       color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: var(--primary-soft);
-      display: grid;
-      place-items: center;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 40px;
+      font-size: 0.96rem;
     }
 
     .steps {
-      display: grid;
-      gap: 14px;
-      max-width: 600px;
+      max-width: 780px;
       margin: auto;
+      display: grid;
+      gap: 16px;
     }
 
     .step {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
       background: var(--primary);
-      color: black;
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
+      color: #111;
       display: grid;
       place-items: center;
-      font-weight: 700;
+      font-weight: 900;
     }
 
-    .hero-visual {
-      padding: 40px 0 20px;
+    .step h3 {
+      margin-bottom: 4px;
     }
 
-    .visual-wrapper {
-      position: relative;
-      height: 380px;
+    .step p {
+      color: var(--muted);
+    }
+
+    .seo-block {
+      background: linear-gradient(145deg, rgba(255,152,0,0.13), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,152,0,0.22);
       border-radius: var(--radius-xl);
-      background: radial-gradient(circle at center, rgba(124,92,255,0.2), transparent 60%);
-      overflow: hidden;
+      padding: 34px;
     }
 
-    .phone-shape {
-      position: absolute;
-      width: 220px;
-      height: 360px;
-      border-radius: 30px;
-      border: 2px solid rgba(255,255,255,0.15);
-      right: 35%;
-      top: 10px;
-      transform: rotate(6deg);
-      overflow: hidden;
-      background: rgba(255,255,255,0.04);
+    .seo-block p {
+      color: var(--muted);
+      margin-top: 12px;
     }
 
-    .phone-shape img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .faq {
+      display: grid;
+      gap: 14px;
+      max-width: 850px;
+      margin: auto;
     }
 
-    .watch-shape {
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.15);
-      left: 20%;
-      bottom: 40px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .watch-shape img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .chip {
-      position: absolute;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
+    details {
+      background: rgba(255,255,255,0.055);
       border: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.85rem;
+      border-radius: 18px;
+      padding: 18px 20px;
     }
 
-    .chip-left { left: 10px; top: 20px; }
-    .chip-right { right: 10px; bottom: 20px; }
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+    }
+
+    details p {
+      color: var(--muted);
+      margin-top: 10px;
+    }
 
     .cta {
-      text-decoration: none;
       text-align: center;
-      padding: 80px 20px;
+    }
+
+    .cta-box {
+      border-radius: var(--radius-xl);
+      padding: 52px 24px;
+      background:
+        radial-gradient(circle at top, rgba(255,152,0,0.26), transparent 46%),
+        rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.045em;
+      margin-bottom: 12px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      margin-bottom: 24px;
     }
 
     footer {
-      text-align: center;
-      padding: 30px 0;
+      padding: 34px 0;
       color: var(--muted);
       border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.92rem;
     }
 
-    @media(max-width: 900px){
-      .grid { grid-template-columns: 1fr 1fr; }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    @media(max-width: 900px){
-      .grid { grid-template-columns: 1fr 1fr; }
-      .visual-wrapper { height: 300px; }
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .visual-card {
+        min-height: 400px;
+      }
+
+      .phone {
+        right: 42px;
+      }
     }
 
-    @media(max-width: 600px){
-      .grid { grid-template-columns: 1fr; }
-      .visual-wrapper { height: 240px; }
-    }
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 64px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-card {
+        min-height: 330px;
+      }
+
+      .phone {
+        width: 170px;
+        height: 300px;
+        right: 28px;
+        top: 36px;
+      }
+
+      .watch {
+        width: 135px;
+        height: 135px;
+        left: 28px;
+        bottom: 42px;
+      }
+
+      .chip-1,
+      .chip-2 {
+        display: none;
+      }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Piley - Video Player for Wear OS",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Wear OS, Android",
+    "description": "Piley is a video player for Wear OS that lets users send MP4 videos from an Android phone to a Wear OS smartwatch and watch them offline.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "downloadUrl": "https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to watch videos on Wear OS",
+    "description": "Learn how to send videos from an Android phone to a Wear OS smartwatch and watch them offline with Piley.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Install Piley",
+        "text": "Install Piley on your Android phone and Wear OS smartwatch."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Choose a video",
+        "text": "Open Piley on your phone and select an MP4 video."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Send to watch",
+        "text": "Transfer the video from your phone to your Wear OS watch."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Watch offline",
+        "text": "Open the video on your watch and watch it directly from your wrist."
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I watch videos on Wear OS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. With Piley, you can send videos from your Android phone to your Wear OS smartwatch and watch them directly on your wrist."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I watch videos on Galaxy Watch?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. If your Galaxy Watch runs Wear OS, Piley lets you transfer videos from your Android phone and play them on the watch."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Piley work offline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. After transferring a video to your watch, you can watch it offline without keeping the phone connected."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which video format works best on Wear OS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MP4 is usually the best format for Wear OS video playback. Piley is designed for simple phone-to-watch video transfer and playback."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
+
 <body>
 
 <header class="nav">
   <div class="container nav-inner">
     <div class="brand">
       <div class="brand-icon">▶</div>
-      Piley
+      <span>Piley</span>
     </div>
 
-    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer">Download</a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer" rel="noopener">
+      Download
+    </a>
   </div>
 </header>
 
-<section class="hero">
-  <div class="container">
-    <h1>Watch videos on your smartwatch</h1>
-    <p>Send videos from your phone to your Wear OS watch and watch them anytime, anywhere.</p>
-    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer">Get on Google Play</a>
-  </div>
-</section>
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="badge">Video Player for Wear OS</div>
 
-<section class="hero-visual">
-  <div class="container">
-    <div class="visual-wrapper">
-      <div class="phone-shape">
-        <img src="phone-app.png" alt="Piley Android app screenshot" />
+        <h1>Watch videos on your Galaxy Watch or Wear OS smartwatch</h1>
+
+        <p class="hero-text">
+          Piley helps you send MP4 videos from your Android phone to your Wear OS watch, so you can watch videos offline directly from your wrist.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer" rel="noopener">
+            Get on Google Play
+          </a>
+          <a class="btn btn-secondary" href="#how-it-works">
+            See how it works
+          </a>
+        </div>
+
+        <p class="trust">
+          Built for Wear OS users who want a simple way to transfer and play videos on a smartwatch.
+        </p>
       </div>
 
-      <div class="watch-shape">
-        <img src="wear-app.png" alt="Piley Wear OS app screenshot" />
-      </div>
+      <div class="visual-card" aria-label="Piley phone and Wear OS watch preview">
+        <div class="phone">
+          <img src="phone-app.png" alt="Piley Android phone app for sending videos to Wear OS" />
+        </div>
 
-      <div class="chip chip-left">Phone → Watch</div>
-      <div class="chip chip-right">Smooth playback</div>
-    </div>
-  </div>
-</section>
+        <div class="watch">
+          <img src="wear-app.png" alt="Piley Wear OS video player screen on smartwatch" />
+        </div>
 
-<section class="features">
-  <div class="container">
-    <div class="section-title">
-      <h2>Features</h2>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="icon">📲</div>
-        <h3>Easy transfer</h3>
-        <p>Send videos from your phone to your watch in seconds.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">⌚</div>
-        <h3>Wear OS optimized</h3>
-        <p>Clean UI designed for small screens.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">▶</div>
-        <h3>Playback controls</h3>
-        <p>Play, pause, and control videos easily.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🔍</div>
-        <h3>Zoom mode</h3>
-        <p>Better viewing on your watch screen.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🗂️</div>
-        <h3>Manage videos</h3>
-        <p>Delete and organize saved videos.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">⚡</div>
-        <h3>Fast & simple</h3>
-        <p>No setup, just send and watch.</p>
+        <div class="floating-chip chip-1">Phone → Watch</div>
+        <div class="floating-chip chip-2">Offline playback</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section>
-  <div class="container">
-    <div class="section-title">
-      <h2>How it works</h2>
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>A simple video player made for Wear OS</h2>
+        <p>
+          Piley focuses on one clear use case: sending videos to your smartwatch and watching them easily on a small screen.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="icon">📲</div>
+          <h3>Send videos from phone</h3>
+          <p>Select a video on your Android phone and transfer it to your Wear OS watch.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">⌚</div>
+          <h3>Wear OS optimized</h3>
+          <p>A clean watch interface designed for round and small smartwatch screens.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">▶</div>
+          <h3>Video playback controls</h3>
+          <p>Play, pause and control videos directly from your smartwatch.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">📦</div>
+          <h3>Offline watching</h3>
+          <p>Watch transferred videos without needing to stream from the internet.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">🔍</div>
+          <h3>Zoom mode</h3>
+          <p>Adjust the viewing experience for a better fit on your watch screen.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">🗂️</div>
+          <h3>Manage saved videos</h3>
+          <p>Keep your watch storage cleaner by deleting videos when you no longer need them.</p>
+        </article>
+      </div>
     </div>
+  </section>
 
-    <div class="steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <div>Select a video on your phone</div>
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>How to watch videos on Wear OS</h2>
+        <p>
+          You do not need a complicated setup. Piley makes the process simple.
+        </p>
       </div>
 
-      <div class="step">
-        <div class="step-number">2</div>
-        <div>Send it to your watch</div>
-      </div>
+      <div class="steps">
+        <article class="step">
+          <div class="step-number">1</div>
+          <div>
+            <h3>Install Piley</h3>
+            <p>Install Piley on your Android phone and Wear OS smartwatch.</p>
+          </div>
+        </article>
 
-      <div class="step">
-        <div class="step-number">3</div>
-        <div>Watch instantly</div>
+        <article class="step">
+          <div class="step-number">2</div>
+          <div>
+            <h3>Select your video</h3>
+            <p>Choose an MP4 video from your phone.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-number">3</div>
+          <div>
+            <h3>Send it to your watch</h3>
+            <p>Transfer the video to your Galaxy Watch or Wear OS smartwatch.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-number">4</div>
+          <div>
+            <h3>Watch on your wrist</h3>
+            <p>Open the video on your smartwatch and watch it offline.</p>
+          </div>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="cta">
-  <div class="container">
-    <h2>Simple video experience on your wrist</h2>
-    <p>Built for one purpose: sending and watching videos easily.</p>
-    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer">Download Piley</a>
-  </div>
-</section>
+  <section>
+    <div class="container">
+      <div class="seo-block">
+        <h2>Best for users searching for a Wear OS video player</h2>
+        <p>
+          Piley is designed for people who want to watch videos on a smartwatch, play MP4 videos on Wear OS, send videos to a Galaxy Watch, or use an offline video player on their wrist.
+        </p>
+        <p>
+          Whether you want to watch short clips, personal videos, tutorials or saved media, Piley gives Wear OS users a simple phone-to-watch video experience.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2>FAQ</h2>
+        <p>
+          Common questions about watching videos on Wear OS and Galaxy Watch.
+        </p>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>Can I watch videos on Wear OS?</summary>
+          <p>Yes. With Piley, you can send videos from your Android phone to your Wear OS smartwatch and watch them directly on your wrist.</p>
+        </details>
+
+        <details>
+          <summary>Can I watch videos on Galaxy Watch?</summary>
+          <p>Yes. If your Galaxy Watch runs Wear OS, you can use Piley to transfer videos from your phone and play them on the watch.</p>
+        </details>
+
+        <details>
+          <summary>Does Piley work offline?</summary>
+          <p>Yes. After the video is transferred to your watch, you can watch it offline without streaming.</p>
+        </details>
+
+        <details>
+          <summary>What video format should I use?</summary>
+          <p>MP4 is usually the best option for smartwatch video playback.</p>
+        </details>
+
+        <details>
+          <summary>Is Piley a video player for Wear OS?</summary>
+          <p>Yes. Piley is a video player app made for Wear OS smartwatches.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Turn your Wear OS watch into a tiny video player</h2>
+        <p>Send videos from your phone and watch them offline on your smartwatch.</p>
+
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.loftymr.wristwear.videoplayer" rel="noopener">
+          Download Piley
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <div class="container">
-    © 2026 Piley
+  <div class="container footer-inner">
+    <span>© 2026 Piley</span>
+    <span>Video Player for Wear OS</span>
   </div>
 </footer>
 
